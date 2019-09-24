@@ -7,11 +7,23 @@ import java.util.Set;
 
 @Entity
 public class Book {
+
     @Id
     @GeneratedValue (strategy = GenerationType.AUTO)
+    private  Long id;
     private String title;
     private String isbn;
-    private String publisher;
+
+    public Publisher getPublisher() {
+        return publisher;
+    }
+
+    public void setPublisher(Publisher publisher) {
+        this.publisher = publisher;
+    }
+
+    @OneToOne
+    Publisher publisher;
 
     @ManyToMany
     private Set<Author> authors = new HashSet<>();
@@ -24,6 +36,14 @@ public class Book {
         this.isbn = isbn;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public String getIsbn() {
         return isbn;
     }
@@ -32,13 +52,7 @@ public class Book {
         this.isbn = isbn;
     }
 
-    public String getPublisher() {
-        return publisher;
-    }
 
-    public void setPublisher(String publisher) {
-        this.publisher = publisher;
-    }
 
     public Set<Author> getAuthors() {
         return authors;
@@ -56,19 +70,4 @@ public class Book {
         this.title = title;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Book book = (Book) o;
-        return Objects.equals(title, book.title) &&
-                Objects.equals(isbn, book.isbn) &&
-                Objects.equals(publisher, book.publisher) &&
-                Objects.equals(authors, book.authors);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(title, isbn, publisher, authors);
-    }
 }

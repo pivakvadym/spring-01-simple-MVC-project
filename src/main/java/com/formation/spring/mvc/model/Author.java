@@ -5,21 +5,30 @@ import java.util.*;
 
 @Entity
 public class Author {
+
     @Id @GeneratedValue (strategy = GenerationType.AUTO)
     private Long id;
-    private String fisrName;
+    private String firstName;
     private String lastName;
 
-    @ManyToMany
+    @ManyToMany (mappedBy = "authors")
     private Set <Book> books = new HashSet<>() ;
 
 
     public Author() {
     }
 
-    public Author(String fisrName, String lastName) {
-        this.fisrName = fisrName;
+    public Author(String firstName, String lastName) {
+        this.firstName = firstName;
         this.lastName = lastName;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getLastName() {
@@ -30,12 +39,12 @@ public class Author {
         this.lastName = lastName;
     }
 
-    public String getFisrName() {
-        return fisrName;
+    public String getFirstName() {
+        return firstName;
     }
 
     public void setFisrName(String fisrName) {
-        this.fisrName = fisrName;
+        this.firstName = fisrName;
     }
 
 
@@ -49,13 +58,17 @@ public class Author {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Author author = (Author) o;
-        return Objects.equals(fisrName, author.fisrName) &&
+        return Objects.equals(firstName, author.firstName) &&
                 Objects.equals(lastName, author.lastName) &&
                 Objects.equals(books, author.books);
     }
 
+    public Set<Book> getBooks() {
+        return books;
+    }
+
     @Override
     public int hashCode() {
-        return Objects.hash(fisrName, lastName, books);
+        return Objects.hash(firstName, lastName, books);
     }
 }
